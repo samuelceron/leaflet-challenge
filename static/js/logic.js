@@ -30,6 +30,29 @@ function colorSelector(magnitude){
     return color
 }
 
+// Create legend with the context of map
+let legend = L.control({position: "bottomright"})
+
+legend.onAdd = function (map){
+    let div = L.DomUtil.create('div', 'info legend');
+//Set the title of legend
+    labels = ['Magnitude'],
+// Set the beans
+    beans = ['0-1','1-2','2-3','3-4','4-5','5+'];
+    color_beans = [0.5, 1.5, 2.5, 3.5, 4.5, 5.5];
+// HTML setting colors
+    for (var i = 0; i < beans.length; i++) {
+            div.innerHTML += 
+            labels.push(
+                '<i class="circle" style="background:' + colorSelector(color_beans[i]) + '"></i> ' +
+            (beans[i] ? beans[i] : '+'));
+        }
+    // Creating a div so as to add the legend 
+    div.innerHTML = labels.join('<br>');
+    return div;
+};
+// adding the legend to the map
+legend.addTo(map);
 
 // Read data"
 d3.json("https://earthquake.usgs.gov/earthquakes/feed/v1.0/summary/all_week.geojson")
